@@ -1,0 +1,28 @@
+# SCOMS: Source-Constrained Operational Model Selection — Frozen Follow-up
+
+Target journal: **Scientia Iranica, Transactions D, Computer Science & Engineering**.
+This is a **single exploratory follow-up** after v1–v4 were inspected. No external target labels enter fitting or **within-run** selection, but the research question and baseline were influenced by earlier target results. It is **not an independent, prospectively registered confirmation** and cannot demonstrate a novel method or publication readiness by itself.
+
+## Fixed research question
+Can a source-only, minimax operating-point selector outperform fixed simple URL classifiers when deployed on an excluded dataset, without sacrificing phishing recall?
+
+## Datasets and leakage controls
+Four input corpora: PhiUSIIL, URL-Phish V2, LegitPhish V2, CompPhish V4. Canonical target is `y=1` phishing, `y=0` benign. Source-specific numeric label conventions are explicitly converted. Extract **31 shared lexical URL features**, not vendor-supplied precomputed features or HTML. Deduplicate exact URLs and delete inter-source contradictions in source training. Source train/calibration groups are disjoint by public-suffix registered domain with frozen SHA-256 hashing. All target samples remain unseen until evaluation; strict-unseen primary subset excludes every domain present in any source corpus, whether or not it was capped for fitting.
+
+## Candidates and calibration, frozen before evaluation
+Candidate families: `LR_full`, `LR_prefix`, `HGB_full`, `HGB_prefix`, `LR_CCPS`, `HGB_CCPS`. LR uses standard scaling and class balance. HGB uses fixed max_iter=115, max_leaf_nodes=15, learning_rate=0.08, l2=1.0, min_samples_leaf=45, class-balanced weights. The CCPS negative-control feature subset uses **fixed** lambda=0.1, K=16, trained only on available sources; **not** the v4 selected target-specific hyperparameters. Operating FPR calibration alpha grid = **[0.005, 0.01, 0.02, 0.05, 0.10]**. Source calibration cutoff is derived from a sorted, tie-safe benign-score order statistic with a per-source empirical FPR no higher than alpha. The final calibration cutoff is the maximum cutoff across available source calibration corpora. No external FPR guarantee follows.
+
+## Inner model/operating-point selection
+For each of the four outer held-out targets, use only the **other three sources**. In turn hold one of these three source **training** partitions out for an inner evaluation. Train on two remaining sources; calibrate only on their group-disjoint calibration partitions. Remove held inner rows overlapping either inner source domain. Inner held source must satisfy: >=10% retention in *both* classes, >=100 samples/class, >=15 domains/class; each source calibration set must include >=50 benign records. Require >=2 valid inner folds.
+
+A candidate is feasible if it obtains phishing **Recall >=0.20 in every valid inner held source**. Among feasible candidates select the **minimum worst inner-source FPR**, breaking ties by maximum worst-source Recall, highest mean MCC, fixed candidate order, then lower alpha. If no candidate is feasible or fewer than two folds qualify, mark `INFEASIBLE_FALLBACK_BASELINE` and use the fixed `LR_prefix` at alpha=1% **only as a fall back**. Never use target metrics to choose an operating point.
+
+## Frozen external comparisons
+Fit selected model and all six frozen candidates on the three source training corpora, calibrating each fixed model at alpha=1% using source-only calibration. The selected model is calibrated at its chosen alpha, potentially different from 1%. Compare selected with **both** `LR_prefix` at alpha=1% (strong simple baseline identified in v4) and `HGB_full` at alpha=1%, and report all six candidate models. Full external target results are descriptive. Strict-unseen is eligible for main claims only if >=10% **both-class retention**, >=100 samples/class and >=15 registered-domain clusters/class.
+
+Primary success: across **at least two of the three eligible targets** PhiUSIIL, URL-Phish and CompPhish, selected choice must be feasible (not a fallback), and **paired registered-domain bootstrap CI95 upper bound on delta FPR is below 0**, **while CI95 lower bound on delta Recall is >= -0.03**, compared with **both** fixed baselines. `LegitPhish` is descriptive only because v4 strict domain filtering retained too few benign cases. Bootstrap repetitions: 400, frozen seed=42. The strong gate is exploratory, not a journal acceptance predictor.
+
+All metrics: FPR, phishing Recall, MCC, PR-AUC, confusion counts, false alerts per 10,000 benign URLs; exact binomial CIs for error rates and paired cluster bootstrap CIs for comparisons. Per-domain confusion summaries and keyed anonymous sample IDs are exported, not raw URLs. HMAC key is ephemeral and undisclosed for privacy; do not treat IDs as re-linkable across runs.
+
+## Stopping rule and scientific interpretation
+If gate fails, **stop tuning the family on the same four target corpora**. Preserve the v1–v5 reproducible evidence as negative/critical evaluation, and seek a truly independent methodological result or independent new corpus before asserting novelty. If gate passes, it shows a within-study advantage under this exploratory protocol, **not** novelty or acceptance probability. Any final claim must be situated against the latest domain generalization and selective prediction literature. Do not claim deployment-time guarantees, prospective temporal validation, causality, or fully independent confirmation.

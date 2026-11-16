@@ -1,0 +1,5 @@
+target,selection_status,selected_model,selected_alpha,n_eligible_inner,selected_worst_inner_FPR,selected_worst_inner_Recall,fallback_used,source_conflict_rows_removed,source_post_conflict_dedup_and_cap_removed,train_count,cal_count
+PhiUSIIL,FEASIBLE_SOURCE_ONLY,HGB_prefix,0.005,3,0.020354563361785948,0.3124659771366358,False,2,172987,48221,10244
+URL-Phish,INFEASIBLE_FALLBACK_BASELINE,LR_prefix,0.01,1,,,True,0,301229,41519,8845
+LegitPhish,FEASIBLE_SOURCE_ONLY,HGB_prefix,0.01,3,0.024783955649763573,0.20922915574200315,False,2,307502,48221,10227
+CompPhish,INFEASIBLE_FALLBACK_BASELINE,LR_prefix,0.01,1,,,True,0,392507,48598,10368

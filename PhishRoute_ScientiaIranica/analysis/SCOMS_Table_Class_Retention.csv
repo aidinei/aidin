@@ -1,0 +1,9 @@
+target,policy,n,n_benign,n_phishing,n_groups_benign,n_groups_phishing,retention_benign,retention_phishing,quality_primary
+PhiUSIIL,full_external,235370,134850,100520,132117,43512,1.0,1.0,True
+PhiUSIIL,strict_unseen,152432,90093,62339,89985,43048,0.6680978865406006,0.6201651412654198,True
+URL-Phish,full_external,115231,98641,16590,86535,4348,1.0,1.0,True
+URL-Phish,strict_unseen,90241,84904,5337,79202,3942,0.8607374215589866,0.3216998191681736,True
+LegitPhish,full_external,100872,37380,63492,36556,26252,1.0,1.0,True
+LegitPhish,strict_unseen,61851,66,61785,63,26130,0.001765650080256822,0.9731147231147231,False
+CompPhish,full_external,15351,8154,7197,7549,1920,1.0,1.0,True
+CompPhish,strict_unseen,8145,5956,2189,5660,1565,0.7304390483198431,0.30415450882312073,True

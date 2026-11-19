@@ -1,0 +1,10 @@
+# Original logged environment (2026-11-18): Python 3.13.16, torch 2.14.1+cu130, transformers 4.57.6,
+# scikit-learn 1.6.1, numpy 2.4.6, scipy 1.16.3, CUDA 13.0, Tesla T4.
+# The existing Colab notebook uses bounded dependencies below; reinstall matching torch to suit hardware.
+transformers>=4.48,<5
+sentence-transformers>=3.3,<6
+sentencepiece
+scikit-learn>=1.6,<1.8
+pandas>=2.2,<3
+numpy>=2.0,<2.5
+scipy>=1.15,<1.18

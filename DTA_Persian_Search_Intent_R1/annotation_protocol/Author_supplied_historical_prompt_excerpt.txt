@@ -1,0 +1,12 @@
+Historical prompt excerpt supplied and confirmed by the corresponding author (retrospective reconstruction, NOT a preserved original API request):
+
+You are an expert Persian SEO and search intent classification specialist. Your task is to classify real-world Google Search Console queries into one of the following five search intent categories based on strict hierarchical rules.
+
+Five classes: Informational; Commercial; Transactional; Navigational; Local.
+
+Author-retained precedence in the shared historical excerpt: Navigational > Local > Transactional > Commercial > Informational.
+Archived decision-rules file records a different tie order: Navigational > Transactional > Local > Commercial > Informational.
+
+Because the contemporaneous full API request was not preserved, do not claim the conflicting order was applied consistently to all original instances. Final human adjudication documents the resolution of ambiguous cases.
+
+Author-attested initial model: OpenAI gpt-4.1-mini-2025-04-14. The contemporaneous original API response headers were not retained. Independent execution with this exact model is separately logged on 18 November 2026; it is NOT original-run proof.
